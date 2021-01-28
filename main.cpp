@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <absl/strings/str_format.h>
 #include <cmath>
 
 
@@ -74,35 +73,34 @@ int main() {
     ofstream pfile,pfile1,pfile2,pfilebin;
     FILE *cfile;
     FILE *pcfile;
-    string out;
-    char buff[100];
+    char buff[200];
 
     //imu文件时间修正
-    file.open("/media/zzx/H10/HL_INSPROBE_0_IMU.bin",ifstream::binary);
-    pfilebin.open("/media/zzx/H10/HL_INSPROBE_0_IMU_patch.bin",ifstream::binary);
-    file.read((char*)&imu,sizeof(ImuRaw));
-    double lastsow = imu.sow,dt,compensation=0;
-    while (!file.eof()) {
-        file.read((char*)&imu,sizeof(ImuRaw));
-        if(file.eof())
-            break;
-        dt = imu.sow - lastsow;
-        lastsow = imu.sow;
-        if(dt<-1000)
-            compensation = compensation-dt+0.005;
-        imu.sow += compensation;
-        pfilebin.write((char*)&imu,sizeof(ImuRaw));
-    }
+    // file.open("/media/zzx/H10/HL_INSPROBE_0_IMU.bin",ifstream::binary);
+    // pfilebin.open("/media/zzx/H10/HL_INSPROBE_0_IMU_patch.bin",ifstream::binary);
+    // file.read((char*)&imu,sizeof(ImuRaw));
+    // double lastsow = imu.sow,dt,compensation=0;
+    // while (!file.eof()) {
+    //     file.read((char*)&imu,sizeof(ImuRaw));
+    //     if(file.eof())
+    //         break;
+    //     dt = imu.sow - lastsow;
+    //     lastsow = imu.sow;
+    //     if(dt<-1000)
+    //         compensation = compensation-dt+0.005;
+    //     imu.sow += compensation;
+    //     pfilebin.write((char*)&imu,sizeof(ImuRaw));
+    // }
 
 
 
-//    //ODO文件解码
+   //ODO文件解码
 //    file.open("/media/zzx/STORAGE/FileRecv/Navigation/组合导航数据处理/20190826测试/Rover/ODO_GINS.odo",ifstream::binary);
 //    pfile.open("/media/zzx/STORAGE/FileRecv/Navigation/组合导航数据处理/20190826测试/Rover/odo.txt");
 //    while (!file.eof()) {
 //        file.read((char*)&odo,sizeof(ODO));
-//        out = absl::StrFormat("%.8f %.8f %.8f \n",odo.t,odo.v,0.000);
-//        pfile<<out;
+//        sprintf(buff,"%.8f %.8f %.8f \n",odo.t,odo.v,0.000);
+//        pfile<<buff;
 //    }
 
     //转角数据
@@ -204,10 +202,10 @@ int main() {
 //        }
 //        else{
 //            i=0;
-//            out=absl::StrFormat("%.8f %.8f %.8f\n",midt/N,midv/N,0);
+//            sprintf(buff,"%.8f %.8f %.8f\n",midt/N,midv/N,0);
 //            midv=0;
 //            midt=0;
-//            pfile<<out;
+//            pfile<<buff;
 //        }
 //    }
 
@@ -279,9 +277,9 @@ int main() {
 //        imu.dtheta[0]=temp1;
 //        imu.dvel[0]=temp2;
 //
-//        out = absl::StrFormat("%.8f %.8f %.8f %.8f %.8f %.8f %.8f \n",imu.sow,imu.dtheta[0],imu.dtheta[1],imu.dtheta[2],
+//        sprintf(buff,"%.8f %.8f %.8f %.8f %.8f %.8f %.8f \n",imu.sow,imu.dtheta[0],imu.dtheta[1],imu.dtheta[2],
 //                imu.dvel[0],imu.dvel[1],imu.dvel[2]);
-//        pfile<<out;
+//        pfile<<buff;
 //        pfilebin.write((char*)&imu,sizeof(ImuRaw));
 //    }
 
@@ -325,14 +323,14 @@ int main() {
 //        if (t >= 438080) {
 //            i=(i+1)%120;
 //            if (i <= 90) {
-//                out = absl::StrFormat("%.3f %.10f %.10f %.3f %.3f %.3f %.3f \n", t, pos[0], pos[1], pos[2], var[0],
+//                sprintf(buff,"%.3f %.10f %.10f %.3f %.3f %.3f %.3f \n", t, pos[0], pos[1], pos[2], var[0],
 //                                      var[1], var[2]);
-//                pfile << out;
+//                pfile << buff;
 //            }
 //        } else{
-//            out = absl::StrFormat("%.3f %.10f %.10f %.3f %.3f %.3f %.3f \n", t, pos[0], pos[1], pos[2], var[0], var[1],
+//            sprintf(buff,"%.3f %.10f %.10f %.3f %.3f %.3f %.3f \n", t, pos[0], pos[1], pos[2], var[0], var[1],
 //                                  var[2]);
-//            pfile << out;
+//            pfile << buff;
 //        }
 //    }
 
@@ -343,9 +341,9 @@ int main() {
 //    while (!file.eof()) {
 //        file >> t >> pos[0] >> pos[1] >> pos[2] >> var[0] >> var[1] >> var[2];
 //        if (t <= 440180) {
-//            out = absl::StrFormat("%.3f %.10f %.10f %.3f %.3f %.3f %.3f \n", t, pos[0], pos[1], pos[2], var[0],
+//            sprintf(buff,"%.3f %.10f %.10f %.3f %.3f %.3f %.3f \n", t, pos[0], pos[1], pos[2], var[0],
 //                                  var[1], var[2]);
-//            pfile << out;
+//            pfile << buff;
 //        }
 //    }
 
